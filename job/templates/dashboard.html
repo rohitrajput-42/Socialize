@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+
+</style>
+
+
+<div class = "container mt-3 mb-3 ml-3 row">
+    <div class = "col-lg-2">
+        <a href = "{% url 'my_profile' %}"><h1> My Profile </h1></a>
+    </div>
+    <div class = "col-lg-2 shadow" style = "border-bottom: 3px solid lightgreen;">
+        <a href = "{% url 'dashboard' %}"><h1> Dashboard </h1></a>
+    </div>
+</div>
+
+<hr style = "background:#000; width: 100%; height:1px; border-radius: 50%;">
+
+<div class = "container mt-5 mb-5">
+
+    <!-- Job Table -->
+    <div class="container">
+        
+        <table class="table table-bordered shadow">
+            <thead class="thead-dark">
+              <tr class ="text-center">
+                <th scope="col">S.No.</th>
+                <th scope="col">Company Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Application Status</th>
+                <th scope="col">Date applied</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for qs in dash %}
+                <tr class = "text-center">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{qs.job}}</td>
+                <td>{{qs.email}}</td>
+                {% if qs.job_status == "Applied" %}
+                    <td><p class = "badge badge-warning" style = "font-size: 17px;">{{qs.job_status}}</p></td>
+                {% elif qs.job_status == "Seen"%}
+                    <td><p class = "badge badge-primary" style = "font-size: 17px;">{{qs.job_status}}</p></td>
+                {% elif qs.job_status == "Not-Selected"%}
+                    <td><p class = "badge badge-danger" style = "font-size: 17px;">{{qs.job_status}}</p></td>
+                {% endif %}        
+                <td>{{qs.date_applied}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+
+        <div class = "container text-center mt-5 mb-5">
+            <a href = "{% url 'my_profile' %}">
+                <button class = "btn btn-lg btn-dark"> Go back <i class="fas fa-sign-out-alt"></i> </button>
+            </a>
+        </div>
+
+    </div>
+    <!-- Job Table --> 
+
+</div>
+
+{% endblock %}

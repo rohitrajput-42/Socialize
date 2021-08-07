@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %} Jobs {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+ 
+    #filters{
+        position: sticky;
+        top:0;
+    }
+
+    @media screen and (max-width: 992px) {
+        #filters {
+            display: none; 
+        }
+    }
+
+    #mini_desc h4{
+        color: 	#505050;
+    }
+
+</style>
+
+    <div class = "container pt-5">
+        <div class = "container row mt-5">
+            
+            <!-- FILTERS -->    
+            <div class = "container col-lg-4">
+
+                <div class = "overflow-auto overflow-primary" style = "max-height: 350px;" id = "filters">
+
+                    <div class = "container text-center">
+                        <p style = "color: rgb(41, 94, 251); font-weight: bold; font-size: 17px;"><i class="fas fa-filter mr-2"></i> Filters </p>
+                    </div>
+
+                    <div class = "container mt-2 mb-4 pt-4 pl-2 pr-2 border shadow rounded text-center">
+                        <form method = "get" class = "mt-3 mb-5">
+                            {{myFilter.form|crispy}}
+                            <button type = "submit" class = "btn btn-md btn-outline-danger ml-3" style = "width: 150px;"> Filter </button>
+                        </form>
+                    </div>
+
+                </div>    
+            </div>
+            <!-- FILTERS -->
+
+            <!-- JOB LIST VIEW -->    
+            <div class = "container col-lg-8 mb-5">
+
+                <div class = "container text-center mb-2">
+                    <p style = "font-weight: bold; font-size: 17px;"><i class="fas fa-briefcase mr-2"></i></i>1000+ Jobs for you....<br /></p>
+                </div>
+
+                {% for job in qs %}
+                    <div class = "container border shadow rounded pt-4 pb-4">
+                        
+                        <!-- JOB TITLE ? LOGO -->
+                        <div class = "container">
+
+                            <div class = "row">
+                                <div class = "col-lg-9">
+                                    <h2> {{job.job_title}} </h2>
+                                    <p style = "font-weight: bold;"> {{job.company_name}} </p>
+                                </div>
+                                <div class = "col-lg-1" style = "float: right;">
+                                    <img style = "height: 90px; width: 95px;" src = "{{job.company_logo.url}}">
+                                </div>
+                            </div>
+                            <!-- JOB TITLE ? LOGO -->
+
+                            <!-- DUARATION / SALARY -->
+                            <div class = "container">
+                                <div class = "row mt-2 mb-3" id = "mini_desc">
+                                    <div class = "col-lg-3 mt-3 mb-3">
+                                        <h4> <i class="fas fa-play-circle mr-1"></i> Start Date</h4>
+                                        <p> Immediately </p>
+                                    </div>
+                                    <div class = "col-lg-3 mt-3 mb-3">
+                                        <h4> <i class="fas fa-map-marked-alt mr-1"></i> Location </h4>
+                                        <p> {{job.location}} </p>
+                                    </div>
+                                    <div class = "col-lg-3 mt-3 mb-3">
+                                        <h4> <i class="fas fa-money-check-alt mr-1"></i> Payscale</h4>
+                                        <p> ₹ {{job.payrate}} </p>
+                                    </div>
+                                    <div class = "col-lg-3 mt-3 mb-3">
+                                        <h4> <i class="fas fa-hourglass-start mr-1"></i> Apply By</h4>
+                                        <p> {{job.apply_by}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- DUARATION / SALARY -->
+
+                            <!-- JOB_STATUS / LINK -->
+                            <div class = "container-fluid mt-3 mb-2">
+                                <div class = "row">
+                                    <div class = "col-lg-9">
+                                        <h1 class = "badge badge-dark" style = "font-size: 17px;"> {{job.job_status}} </h1>
+                                    </div>
+                                    <div class = "col-lg-3">
+                                        <a href = "{% url 'job_detail' job.pk %}"><p style = "font-weight: bold;"> View Details <i class="fas fa-chevron-right"></i> </p></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- JOB_STATUS / LINK -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- JOB LIST VIEW -->
+
+        </div>
+    </div>
+
+{% endblock %}

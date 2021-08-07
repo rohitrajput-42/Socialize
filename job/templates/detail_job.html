@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Jobs Detail {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+@media screen and (max-width: 992px) {
+    #vid_lg {
+        display: none;
+    }
+
+    body{
+        font-size: 10px;
+    }
+}
+
+#mini_desc h3{
+        color: 	#505050;
+}
+
+</style>
+
+<div class = "container mb-5">
+    <div class = "container border shadow mt-5">
+        <!-- DETAIL_HEAD -->
+        <div class = "container row pl-0 pr-0">
+
+            <div class = "container col-lg-7 mt-5 ml-5">
+                
+                <!-- HEad -->
+                <div class = "container">
+                    <h1 class = "display-1" style = "font-family: Georgia, 'Times New Roman', Times, serif;"> Socialize </h1>
+                    <p style = "font-size: 17px;"> Give your Career the Boost it deserves.... </p>
+                </div>
+
+                <hr style = "color: #000; width: 100%;">
+
+                <div class = "container">
+                    <p style = 'font-size: 30px; color: darkgray;'> Our Services </p>
+                    <div class = "row">
+                        <div class = "col-lg-2">
+                            <a href = "#">
+                                <p class = "badge badge-pill badge-light border shadow pl-4 pr-4 pt-2 pb-2" style = "font-size: 18px; color: lightseagreen;"> Blog </p>
+                            </a>    
+                        </div>
+                        <div class = "col-lg-2 mr-5">
+                            <a href = "#">
+                                <p class = "badge badge-pill badge-light border shadow pl-4 pr-4 pt-2 pb-2" style = "font-size: 18px; color: lightseagreen;"> Portfolio </p>
+                            </a>
+                        </div>
+                        <div class = "col-lg-2">
+                            <a href = "#">
+                                <p class = "badge badge-pill badge-light border shadow pl-4 pr-4 pt-2 pb-2" style = "font-size: 18px; color: lightseagreen;"> Jobs </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- HEad -->
+            </div>
+
+            <div class = "container col-lg-4" id = "vid_lg">
+                <video loop autoplay muted style = "height: 400px; width: 350px;"> 
+                    <source src="{% static 'jb.mp4' %}" type="video/mp4"> 
+                </video>
+            </div>
+
+        </div>
+        <!-- DETAIL_HEAD -->
+    </div>
+
+    <!--BODY-->
+    <div class="container border shadow mt-4 pt-5">
+
+        <div class="container">
+
+            <div class = "row">
+                <div class = "col-lg-10">
+                    <h1> {{job.job_title}} </h1>
+                    <p style = "font-weight: bold;"> {{job.company_name}} </p>
+                </div>
+                <div class = "col-lg-2">
+                    <img style = "height: 90px; width: 95px;" src = "{{job.company_logo.url}}">
+                </div>
+                    
+                </div>
+            </div>
+
+            <div class = "container mt-2 mb-4">
+                <p style = "font-size: 16px; font-weight: lighter;"> <i class="fas fa-map-marker-alt"></i> {{job.location}} </p>
+            </div>
+
+            <div class = "container">
+                <div class = "row mt-2 mb-3" id = "mini_desc">
+                    <div class = "col-lg-2 mt-3 mb-3">
+                        <h3> <i class="fas fa-play-circle mr-1"></i> Start Date</h3>
+                        <h4> Immediately </h4>
+                    </div>
+                    <div class = "col-lg-2 mt-3 mb-3">
+                        <h3> <i class="fas fa-clipboard-list"></i> Category </h3>
+                        <h4> {{job.job_status}} </h4>
+                    </div>
+                    <div class = "col-lg-2 mt-3 mb-3">
+                        <h3> <i class="fas fa-money-check-alt mr-1"></i> Payscale</h3>
+                        <h4> ₹ {{job.payrate}} </h4>
+                    </div>
+                    <div class = "col-lg-2 mt-3 mb-3">
+                        <h3> <i class="fas fa-hourglass-start mr-1"></i> Apply By</h3>
+                        <h4> {{job.apply_by}} </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "container mt-3 mb-5">
+                <p> 1000+ Applicants  </p>
+            </div>
+
+            <div class = "container mt-3 mb-5">
+                <h1><u> About {{job.company_name}}</u> </h1>
+                <p> {{job.company_description|safe}} </p>
+            </div>
+
+            <div class = "container mt-4 mb-5">
+                <h1><u>Skills</u></h1>
+                <div class = "container row">
+                    {% for tag in job.skills_tag.all %}
+                    <div class = "col-lg-1 mr-5">
+                        <p class = "badge badge-pill badge-light border shadow pl-4 pr-4 pt-2 pb-2" style = "font-size: 15px; color: navy;"> {{tag}} </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="container mt-4 mb-4">
+                <h1><u> Job Details </u></h1>
+                <p> {{job.job_details|safe}} </p>
+            </div>
+
+            <div class="container mt-5 mb-5">
+                <!-- Modal -->
+                <div class="modal fade bd-comment-modal-lg" id="commentModal-{{delta.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h2 class="modal-title" id="exampleModalLabel">Apply for the job</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class = "form-group text-center" method = POST enctype="multipart/form-data">
+                                    {% csrf_token %}
+                
+                                    <div class = "container mb-5">
+                                        <div class="form-group row">
+                                            <label for="resume" class = "col-sm-3"> Upload Resume: </label>
+                                            {{job_form.resume}}    
+                                        </div>
+                        
+                                        <div class="form-group row">
+                                            <label for="email" class = "col-sm-3"> Email: </label>
+                                            {{job_form.email}}
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="phone" class = "col-sm-3"> Phone: </label>
+                                            {{job_form.phone}}
+                                        </div>
+                                    </div>
+                
+                                    <input type = "hidden" name = "job_id" value = {{job.id}}>
+                                    <button type = "submit" class = "btn btn-lg btn-outline-success mb-4"> Apply </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class = "text-center">
+                    <button data-toggle="modal" data-target="#commentModal-{{delta.id}}" class = "btn btn-lg btn-primary"> Apply </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

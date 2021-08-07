@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% load static %}
+
+{% block content %}
+<style>
+
+    #base_1{
+        padding-top: 150px;
+    }
+
+    .list-group a{
+        margin-top: 20px;
+        border-radius: 15px;
+        height: 70px;
+        padding-top: 20px;
+    }
+
+    .list-group a:hover{
+        box-shadow: 3px 7px #888888;
+        transition: 0.4s;
+    }
+
+    .list-group a i{
+        float: right;
+    }
+
+    @media screen and (max-width: 992px) {
+        #base_1_img {
+            display: none;
+        }
+    }
+
+    #categs button{
+        font-size: 25px;
+        padding: 10px 20px 10px 20px; 
+        margin: 10px;
+        border-radius: 40px;
+    }
+
+    #categs button:hover{
+        box-shadow: 5px 7px #888888;
+    }
+
+    #base_more{
+        float: right;
+        margin: 20px 15px 0px 0px;
+        color: #000;
+    }
+
+    #show_more{
+        color:#000;
+        float: right;
+    }
+
+    #cat_list{
+        padding-top: 150px;
+    }
+
+    #base_3{
+        margin-top: 180px;
+        margin-bottom: 180px;
+        padding: 100px 0px 100px 0px;
+        background-image: url('static/base_img.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #base_3 p{
+        font-size: 50px;
+    }
+
+    #base_3 a{
+        font-size: 20px;
+        background-color: #000;
+        color: #fff;
+        border: 1px solid #000;
+    }
+
+    #base_3 a:hover{
+        background-color: #fff;
+        color: #000;
+    }
+
+    #base_4{
+        margin-bottom: 180px;
+    }
+
+    #base_4 div{
+        padding: 30px 0px 20px 20px;
+    }
+
+    #base_4 div div a{
+        color: #000;
+    }
+
+    #base_4 div div a:hover{
+        text-decoration: none;
+    }
+
+    #base_4 div div h1{
+        font-size: 20px;
+        margin:0px 0px 30px 0px; 
+    }
+
+    #base_4 div div h1 span{
+        color: darkgray;
+        font-size: 14px;
+    }
+
+    #viewmore p{
+        font-size: 15px;
+        width: 100px;
+    }
+
+    #viewmore p:hover{
+        cursor: pointer;
+    }
+
+</style>
+    
+    <div class = "container">
+
+        <!-- BASE 1 -->
+        <div class = "container row mt-5" id = "base_1">
+            <div class = "container col-lg-6">
+                <div id="list-example" class="list-group">
+                    <a class="list-group-item list-group-item-action" href="#list-item-1">Looking for job? <i class="fas fa-chevron-right"></i></a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-2">Socialize with Us! <i class="fas fa-chevron-right"></i></a>
+                    <a class="list-group-item list-group-item-action" href="#list-item-3">Looking for someone you know? <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+
+            <div class = "container col-lg-6 mt-5" id = "base_1_img">
+                <img src = "{% static 'base_1.jpg' %}">
+            </div>
+        </div>
+        <!-- BASE 1 -->
+
+        <!-- BASE 2 -->
+        <div class = "container mt-5 mb-5 row" id = "cat_list">
+            <div class = "container col-lg-5">
+                <h1> Jobs sorted according to your interests </h1>
+            </div>
+            <div class = "container col-lg-7" id = "categs">
+                
+                <button class = "btn-sm btn-outline-dark"> Engineering </button>
+                <button class = "btn-sm btn-outline-dark"> Accounts </button>
+                <button class = "btn-sm btn-outline-dark"> Electrical </button>
+
+                <div id = "show_me" style = "display: none;">
+                    <button class = "btn-sm btn-outline-secondary"> Management </button>
+                    <button class = "btn-sm btn-outline-secondary"> IT-Software </button>
+                    <button class = "btn-sm btn-outline-secondary"> HR </button>
+
+                    <button class = "btn-sm btn-outline-info"> Acting </button>
+                    <button class = "btn-sm btn-outline-info"> Architecture </button>
+                    <button class = "btn-sm btn-outline-info"> BigData </button>
+
+                    <button class = "btn-sm btn-outline-primary"> FrontEnd </button>
+                    <button class = "btn-sm btn-outline-primary"> BackEnd </button>
+                    <button class = "btn-sm btn-outline-primary"> FullStack </button>
+
+                </div>
+
+                <div id = "viewmore" style = "float: right">
+                    <p onclick = "myFunction()" class = "btn btn-sm btn-dark mt-3 mr-3"> View More </p>
+                </div>
+
+            </div>
+        </div>
+        <!-- BASE 2 -->
+    </div>
+
+    <!-- BASE 3 -->
+    <div class = "container-fluid text-center" id = "base_3">
+        <p> Post a Job? </p>
+        <a href = "" class = "btn btn-lg"> Get Started <i class="fas fa-sign-in-alt"></i></a> 
+    </div>
+    <!-- BASE 3 -->
+
+    <div class = "container" id = "base_4">
+        <!-- BASE 4 -->
+        <div class = "container border rounded shadow">
+
+            <h1 class = "ml-5"> Career advices & Tips </h1>
+
+            <div>
+                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
+                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
+                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
+                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
+                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
+            </div>
+
+            <div class = "mr-5 mb-3">
+                <a href = "#" style = "float: right"> Show More <i class="fas fa-angle-right"></i> </a>
+            </div>
+
+        </div>
+        <!-- BASE 4 -->
+    </div>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("show_me");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } 
+            else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+{% endblock %}

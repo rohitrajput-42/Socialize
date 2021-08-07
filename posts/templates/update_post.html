@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Update Post {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    
+    <div class = "container border shadow mt-5 p-4">
+        <h1 class = "display-3 mt-2 mb-3"> Update Post </h1>
+        <form method = 'POST' class = "mb-5 pb-5" enctype = "multipart/form-data">
+            {% csrf_token %}
+
+            {{form.media}}
+            {{ form|crispy }}
+
+            <button type = 'submit' class = "btn btn-lg btn-success mt-3 mb-5 mr-5" style = "float: right;"> Update </button>
+
+        </form>
+    </div>
+
+{% endblock %}

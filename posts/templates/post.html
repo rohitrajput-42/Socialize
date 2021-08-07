@@ -1,0 +1,395 @@
+{% extends 'base.html' %}
+
+{% block title %} Blog {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+    #profile{
+        border-radius: 5px;    
+        position: sticky;
+        top:0;    
+    }
+
+    #user-img{
+        height: 75px;
+        background-color: #a0b4b7;
+    }
+
+    #user-img img{
+        height: 120px;
+        width: 105px;
+        border-radius: 50%;
+        border: 2px solid 	#DCDCDC;
+        padding: 2px;
+    }
+
+    #frnd p{
+        color: #000;
+    }
+
+    #frnd:hover{
+        background-color: lightgray;
+        transition: 0.6s;
+    }
+
+    #links a{
+        font-size: 13px;
+    }
+
+    #links a:hover{
+        font-weight: bolder;
+    }
+
+    #optns div a:hover{
+        font-weight: bolder;
+    }
+
+    #use_links{
+        position: sticky;
+        top:0;
+    }
+
+    #mana{
+        padding: 20px;
+    }
+
+    #mana img{
+        height: 60px;
+        border-radius: 50%;
+        width: 55px;
+        border: 2px solid 	#DCDCDC;
+        padding: 2px;
+    }
+
+    #mana input{
+        width: 100%;
+        height: 50px;
+        border: 1px solid darkgray; 
+        border-radius: 25px;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    #up_icons{
+        font-size: 17px;
+    }
+
+    #up_icons i{
+        margin-right: 10px;
+    }
+
+    #image{
+        color: greenyellow;
+    }
+
+    #video{
+        color: red;
+    }
+
+    #article{
+        color: orangered;
+    }
+
+    #up_post{
+        cursor: pointer;
+    }
+
+</style>
+
+    <div class = "container">
+        <div class = "container row mt-4 mb-5">
+
+            <!-- Modal -->
+            <div class="modal fade bd-example-modal-xl" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Add Post</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class = "row">
+                            <div class = "container col-lg-9 ml-5">
+                                <form method = "POST" class = "ui form" enctype = "multipart/form-data">
+                                    {% csrf_token %}
+                                    {{post_form.media}}
+                                    {{post_form|crispy}}
+                                    <div class="modal-footer">
+                                        <button type="submit" name = "submit_post_form" class="btn btn-lg btn-primary">Add post</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- Modal -->
+
+            <!-- Profile -->
+            <div class = "col-lg-3">
+                <div class = "container border shadow p-0" id = "profile">
+                    <div class = "container text-center pt-3 pl-2 pr-2 pb-3" id = "user-img">
+                        
+                        <a href = "{% url 'my_profile' %}">
+                            <img src = {{customer.avatar.url}}>
+                        </a>
+
+                        <p class = "mt-2"> <b>{{customer.first_name}} {{customer.last_name}}</b> </p>
+
+                    </div>
+
+                    <hr style = "width: 100%; margin-top: 100px;">
+
+                    <a href = "#">
+                        <div class = "container pt-3 pb-3" id = "frnd">
+                            <p> Your Posts <span style = "float: right">{{customer.get_posts_no}}</span></p>
+                        </div>
+                    </a>
+
+                    <a href = "{% url 'dashboard' %}">
+                        <div class = "container pt-3 pb-3" id = "frnd">
+                            <p> Job Dashboard</span></p>
+                        </div>
+                    </a>
+
+                    <hr style = "width: 100%;">
+
+                    <a href = "{% url 'job_page' %}">
+                        <div class = "container pt-3 pb-3">
+                            <h3 class = "text-center"> Jobs <i class="fas fa-briefcase ml-2"></i></h3>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+            <!-- Profile -->
+
+            <!-- Posts -->
+            <div class = "container col-lg-6">
+
+                <div class = "container border rounded shadow" id = "up_post">
+                    <a data-toggle="modal" data-target="#exampleModal">
+                        <div class = "row" id = "mana">
+                            <div class = "container col-lg-2">
+                                <img src = {{customer.avatar.url}}>
+                            </div>
+                            <div class = "container col-lg-10">
+                                <input type = "text" placeholder = "Add a new Post">
+                            </div>
+                        </div>
+
+                        <div class = "container text-center row mt-2 mb-4" id = "up_icons">
+                            <div class = "container col-lg-4">
+                                <p><i class="far fa-image" id = "image"></i> Photo </p>
+                            </div>
+                            <div class = "container col-lg-4">
+                                <p><i class="fab fa-youtube" id = "video"></i>Video</p>
+                            </div>
+                            <div class = "container col-lg-4">
+                                <p><i class="far fa-newspaper" id = "article"></i>Article</p>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+
+                {% for delta in qs %}
+                    <div class = "container border shadow rounded mt-2 mb-2">
+                        
+                        <!-- USER INFO -->
+                        <div class = "container pt-3 pl-2 row">
+                            <div class = "container col-lg-1">
+                                <img class = "rounded-circle" style = "height: 50px; width: 45px;" src = {{delta.author.avatar.url}}>
+                            </div>
+                            <div class = "container col-lg-6 ml-3 mt-2" action = "/#{{delta.id}}"> 
+                                <a href = "" style = "color: #000;">
+                                    <h3> {{delta.author.user}} </h3>
+                                </a> 
+                                <p style = "color: grey; font-size: 12px;"> Posted: {{delta.created|timesince}} ago </p>
+                            </div>
+                            <div class = "container col-lg-4">
+                                <div class = "container row mt-4">
+                                    {% ifequal request.user delta.author.user %}
+                                        <div class = "container col-lg-1 mr-2">
+                                            <a href = "{% url 'post_update' delta.id %}"><button class = "btn btn-sm btn-outline-success"> Update </button></a>
+                                        </div>
+                                        <div class = "container col-lg-1 ml-4">
+                                            <a href = "{% url 'post_delete' delta.id %}"><button class = "btn btn-sm btn-outline-danger"> Delete </button></a>
+                                        </div>
+                                    {% endifequal %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- USER INFO -->
+
+                        
+                        <hr style = "width: 100%;">
+
+                        <div class = "container mt-2 mb-4">
+                            <p> {{delta.content|safe}} </p>  
+                        </div>
+
+                        <!-- PHOTO -->
+                        <div>
+                            {% if delta.image %}
+                                <img class = "rounded" style = "width: 100%; text-align: center;" src = "{{delta.image.url|default_if_none:'#'}}">                    
+                            {% endif %}
+                        </div>
+                        <!-- PHOTO -->
+
+
+                        <!-- LIKE|DISLIKE|COMMENT -->
+                        <div class = "container text-center row mt-4 pt-3 pb-4" id = 'optns'>
+                            
+                            <div class = "text-center col-lg-6">
+                                <form action = "{%  url 'like_unlike_post' %}" method = "POST" id = "like_form">
+                                    {% csrf_token %}
+                                    <input type = "hidden" name = "post_id" value = {{delta.id}}>
+                                    <button type = "submit" class = "btn text-primary">
+                                        {% if customer not in delta.liked.all %}
+                                        <i class="far fa-thumbs-up mr-2 ml-2"></i> <span style = "color :#000;">({{delta.num_likes}}) Like</span> </button>
+                                        {% else %}
+                                        <i class="far fa-thumbs-down mr-2 ml-2"></i> <span style = "color :#000;">({{delta.num_likes}}) Unlike</span> </button>
+                                        {% endif %}
+
+                                </form>
+                            </div>
+
+                            <div class = "text-center col-lg-6">
+
+                                <!-- Modal -->
+                                <div class="modal fade bd-comment-modal-xl" id="commentModal-{{delta.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h2 class="modal-title" id="exampleModalLabel">Write a Comment</h2>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class = "row">
+                                                    <div class = "container col-lg-7">
+
+                                                        <div class = "container mb-3 mt-2" style = "text-align: left;">
+                                                            <p>{{delta.content|safe}}</p>
+                                                        </div>
+
+                                                        {% if delta.image %}
+                                                        <div class = "container">
+                                                            <img class = "border rounded" style = "width: 100%; height: 100%;" src = "{{delta.image.url|default_if_none:'#'}}">
+                                                        </div>    
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class = "container col-lg-5">
+
+                                                        <div class = "container row">
+                                                            <div class = "col-lg-2">
+                                                                <img class = "rounded-circle" style = "height: 60px; width: 55px; border: 2px solid #a0b4b7" src = {{delta.author.avatar.url}}>
+                                                            </div>
+                                                            <div class = "col-lg-2">
+                                                                <h3 class = "mt-3">{{delta.author.user}} </h3>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class = "container mt-3 mb-4">
+                                                            <div class = "overflow-auto overflow-primary" style = "max-height: 350px;">
+                                                                {% for c in delta.comment_set.all %}
+                                                                <div class = "container row mt-4 mb-3">
+                                                                    <div class = "col-lg-1">
+                                                                        <img style = "border-radius: 50%; height: 40px; width: 35px;" src = "{{c.user.avatar.url}}">
+                                                                    </div>
+                                                                    <div class = "col-lg-11"> <p class = "mt-2"><span style = "font-size: 18px; font-weight: bolder;"> {{c.user.user}}:  </span> {{c.body}} </p> </div>
+
+                                                                    <hr class = "border shadow" style = "width: 100%; ">
+
+                                                                </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+
+                                                        <form method = "POST" class = "ui form">
+                                                            {% csrf_token %}
+                                                            <input type = "hidden" name = "post_id" value = {{delta.id}}>
+                                                            {{comment_form|crispy}}
+                                                            <div class="modal-footer">
+                                                                <button type="submit" name = "submit_comment_form" class="btn btn-md btn-primary">Add comment</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+
+                                <button data-toggle="modal" data-target="#commentModal-{{delta.id}}" class = "btn text-primary">
+                                <i class="far fa-comments mr-2 ml-2"></i> <span style = "color :#000;"> ({{delta.num_comments}}) Comments</span>
+                                </button>
+                            </div>
+
+                        </div>
+                        <!-- LIKE|DISLIKE|COMMENT -->
+
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Posts -->
+
+            <!-- FAQ's Links -->
+            <div class = "container col-lg-3" >
+                <div class = "container" id = "use_links">
+                    <div class = "container border rounded shadow pl-5 pr-5 pt-3 pb-5">
+                        <h3 class = "text-center mb-4"> FAQ's </h3>
+                        <a href = "#">
+                            <p> Career Tips </p>
+                            <p> Interview Tips </p>
+                            <p> StartUp Tips </p>
+                        </a>
+                    </div>
+
+                    <hr class = "mb-3" style = "width: 100%; height: 1px; background-color: grey; border-radius: 50%;">
+
+                    <h5 class = "text-center mt-6 mb-3"><b> Useful Links </b></h5>
+
+                    <div class = "container row" id = "links">
+                        <div class = "col-lg-3 mr-1">
+                            <a href = "/">Home</a>
+                            <a href = "#">Profile</a>
+                            <a href = "#">Jobs</a>
+                        </div>
+                        <div class = "col-lg-3 mr-4">
+                            <a href = "{% url 'new_path' %}">Blog</a>
+                            <a href = "#">AboutUs</a>
+                            <a href = "#">ContactUs</a>
+                        </div>
+                        <div class = "col-lg-3">
+                            <a href = "#">Security</a>
+                            <a href = "#">Q/A</a>
+                            <a href = "#">Policies</a>
+                        </div>
+                    </div>
+
+                    <div class="text-center p-4" style = "font-size: 13px; color: darkgray;">
+                        © 2021 Copyright: support@socialize.com</a>
+                    </div>
+
+                </div>
+            </div>
+            <!-- FAQ's Links -->
+
+        </div>
+    </div>
+<!---->
+
+
+
+{% endblock %}

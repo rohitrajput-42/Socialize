@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %} AboutUs {% endblock %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+    #priv_head h1{
+        margin: 50px;
+        font-size: 70px;
+        text-decoration: underline;
+    }
+
+    #priv_body{
+        margin: 50px;   
+        border: 1px solid 	#DCDCDC;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        padding: 40px;
+    }
+</style>
+
+<!-- Body -->
+
+<div id = "priv_head" class = "container-fluid">
+    <h1> Contact Us </h1>
+
+    {% if confirm %}
+        <div class="alert alert-success" role="alert">
+            Your Response have been recorded, We will contact you soon...
+        </div>
+    {% endif %}
+
+    <div id = "priv_body">
+    
+        <form method = "POST" class = "mb-5" style = "width: 64%;">
+            {% csrf_token %}
+
+            {{form.media}}
+            {{form|crispy}}
+
+            <button type = "submit" class = "btn btn-lg btn-outline-primary mt-2 mb-5"> Sumbit </button>
+
+        </form>
+
+        <div class="Polaris-Stack__Item_yiyol"><strong><b>Customer Support</b></strong></div>
+        <div class="Polaris-Stack__Item_yiyol"><strong></strong></div>
+        <div class="Polaris-Stack__Item_yiyol"><span>Call Us at :- +91-</span>7017779287</div>
+    <div class="Polaris-Stack__Item_yiyol"><span>Mail Us at :- support@Socialize.com</span></div>
+    </div>
+</div>
+
+<!-- Body -->
+
+{% endblock %}

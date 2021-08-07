@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %} My Profile {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+
+    #pro_pic img{
+        width: 170px;
+        height: 180px;
+        border: 3px solid orangered;
+        padding: 3px;
+    }   
+
+    #pro_info p{
+        font-size: 50px;
+    }
+
+    #profile_counts div p{
+        font-size: 18px;   
+    }
+
+    #profile_counts div a{
+        color: #000;
+    }
+
+    #profile_counts div a:hover{
+        text-decoration: none;
+    }
+
+    #bio p{
+        font-size: 15px;
+    }
+
+    #created p{
+        font-size: 14px;
+        color: 	#A9A9A9;
+    }
+
+    #tab_links li a{
+        color: #000;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    #tab_links li:hover{
+        background-color: rgb(62, 209, 170)
+    }
+
+</style>
+  
+<!-- Modal -->
+<div class="modal fade bd-example-modal-xl" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" id="exampleModalLabel">Edit Profile</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class = "row">
+                <div class = "container col-lg-3">
+                    <img style = "width: 250px; border-radius: 5px;" src="{{obj.avatar.url}}">
+                </div>
+                <div class = "container col-lg-9">
+                    <form method = "POST" class = "ui form" enctype = "multipart/form-data">
+                        {% csrf_token %}
+                        {{form.media}}
+                        {{form.as_p}}
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Modal -->
+
+
+<div class = "container mt-3 mb-3 ml-3 row">
+    <div class = "col-lg-2 shadow" style = "border-bottom: 3px solid lightgreen;">
+        <a href = "{% url 'my_profile' %}"><h1> My Profile </h1></a>
+    </div>
+    <div class = "col-lg-2">
+        <a href = "{% url 'dashboard' %}"><h1> Dashboard </h1></a>
+    </div>
+</div>
+
+<hr style = "background:#000; width: 100%; height:2px; border-radius: 50%;">
+
+<div class = "container mt-5 mb-5">
+
+    <!--PROFILE_PIC / USERNAME / SETTINGS-->
+    <div class = "container row">
+        <div class = "container col-lg-2" id = "pro_pic">
+            <img class = "border-gradient-red rounded-circle" src = "{{obj.avatar.url}}">
+        </div>
+
+        <div class = "container col-lg-9" id = "pro_info">
+
+            <!-- USERNAME/SETTINGS -->
+            <div class = "container row ml-3 mt-5 mb-5">
+
+                <div class = "container col-sm-7">
+                    <p> {{obj.first_name}} {{obj.last_name}} </p>
+                </div>
+
+                <div class = "container col-sm-3 mt-5 ml-5">
+                    <button class = "btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#exampleModal" style = "border: 1px solid lightgrey; font-size: 17px;"> Edit Profile <i class="fas fa-users-cog ml-2"></i> </button>
+                </div>
+
+            </div>
+            <!-- USERNAME/SETTINGS -->
+
+            <!-- PROFILE_COUNTS -->
+            <div class = "container row ml-5" id = "profile_counts">
+                <div class = "container col-sm-4">
+                    <p> <b>{{obj.get_likes_recieved_no}}</b> Likes </p>
+                </div>
+                <div class = "container col-sm-4">
+                    <a href = "#"><p> <b>{{obj.get_friends_no}}</b> Friends </p></a>
+                </div>
+                <div class = "container col-sm-4">
+                    <p> <b>{{obj.get_posts_no}}</b> Posts </p>
+                </div>
+            </div>
+            <!-- PROFILE_COUNTS -->
+
+            <!-- BIO -->
+            <div class = "container mt-4 mb-4 ml-5" id = "bio">
+                <div class = "container">
+                    <p> {{obj.bio|safe}} </p>
+                </div>
+            </div>
+            <!-- BIO -->
+
+            <!-- USER CREATED -->
+            <div class = "container ml-5" id = "created">
+                <div class = "container">
+                    <p> User Since:  "{{obj.created|date:"M d, Y"}}" </p>
+                </div>
+            </div>
+            <!-- USER CREATED -->
+
+        </div>
+    </div>
+    <!--PROFILE_PIC / USERNAME / SETTINGS-->
+
+</div>
+
+{% endblock %}
