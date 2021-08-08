@@ -6,9 +6,9 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', include('profiles.urls')),
+    path('profiles/', include('profiles.urls')),
 
-    path('posts/', include('posts.urls')),
+    path('', include('posts.urls')),
     
     path('job/', include('job.urls')),
 
