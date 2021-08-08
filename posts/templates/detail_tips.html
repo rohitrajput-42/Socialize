@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Career Tips {% endblock %}
+
+{% block content %}
+
+    <div class = "container mt-5 mb-5 border shadow">
+        
+        <h1 class = "display-2"> Career Tips & Advice </h1>
+
+        <div class = "container mt-5">
+            <h1 style = "font-weight: lighter"> <span style = "font-weight: bolder;"><u>Topic</u></span> - {{mania.topic}} </h1>
+
+            <div class = "container">
+                <p class = "ml-5 mr-5"> {{mania.content|safe}} </p>
+            </div>
+
+            <div class = "container mt-5 mb-4">
+                <p class = "mt-5"> <b><u>Author</u></b> : <span style = "color: navy">{{mania.author}}</span> </p>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

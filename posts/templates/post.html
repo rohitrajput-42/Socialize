@@ -201,7 +201,7 @@
 
     #base_4 div div h1 span{
         color: darkgray;
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #viewmore p{
@@ -211,6 +211,10 @@
 
     #viewmore p:hover{
         cursor: pointer;
+    }
+
+    #tips_more a:hover{
+        font-weight: bolder;
     }
 
 </style>
@@ -477,13 +481,13 @@
                     <h5 class = "text-center mt-6 mb-3"><b> Useful Links </b></h5>
 
                     <div class = "container row" id = "links">
-                        <div class = "col-lg-3 mr-1">
+                        <div class = "col-lg-3">
                             <a href = "/">Home</a>
                             <a href = "#">Profile</a>
                             <a href = "#">Jobs</a>
                         </div>
-                        <div class = "col-lg-3 mr-4">
-                            <a href = "#">Blog</a>
+                        <div class = "col-lg-3 mr-5">
+                            <a href = "{% url 'dashboard' %}">Dashboard</a>
                             <a href = "#">AboutUs</a>
                             <a href = "#">ContactUs</a>
                         </div>
@@ -572,15 +576,9 @@
             <h1 class = "ml-5"> Career advices & Tips </h1>
 
             <div>
-                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
-                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
-                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
-                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
-                <a href = "#"><h1> Q1. SQL Query Interview Questions and Answers, <span>Jul 2021</span> </h1></a>
-            </div>
-
-            <div class = "mr-5 mb-3">
-                <a href = "#" style = "float: right"> Show More <i class="fas fa-angle-right"></i> </a>
+                {% for qs in tip %}
+                    <a href = "{% url 'detail_tips' qs.id %}"><h1> Q. {{qs.topic}} <span> ({{qs.created|timesince}} ago...) </span> </h1></a>
+                {% endfor %}
             </div>
 
         </div>

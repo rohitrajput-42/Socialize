@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
-from profiles.models import Profile, Relationship, Career, Contact
+from profiles.models import Profile, Relationship, Contact
 
 class AdminProfile(admin.ModelAdmin):
     list_display = ['user', 'created', 'slug', 'email']
@@ -13,5 +13,4 @@ class AdminContact(admin.ModelAdmin):
 
 admin.site.register(Profile,AdminProfile)
 admin.site.register(Relationship, AdminRelationship)
-admin.site.register(Career)
 admin.site.register(Contact, AdminContact)

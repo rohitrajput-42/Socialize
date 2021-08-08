@@ -45,6 +45,7 @@ LIKE_CHOICES = {
 }
 
 class Like(models.Model):
+
     user = models.ForeignKey(Profile, on_delete = models.CASCADE)
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
     value = models.CharField(choices = LIKE_CHOICES, max_length = 10)
@@ -53,3 +54,12 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user}-{self.post}-{self.value}"
+
+class Tips(models.Model):
+    topic = models.CharField(max_length = 350)
+    content = RichTextField()
+    author = models.CharField(max_length = 350, null = True, blank = True)
+    created = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return self.topic

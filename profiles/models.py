@@ -80,16 +80,6 @@ class Relationship(models.Model):
         return f"{self.sender} | {self.receiver} | {self.status}"
 
 
-class Career(models.Model):
-    topic = models.CharField(max_length = 350)
-    content = models.TextField()
-    created = models.DateTimeField(auto_now_add = True)
-    author = models.CharField(max_length = 350)
-
-    def __str__(self):
-        return f"{self.topic}|By:- {self.author}"
-
-
 class Contact(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     email = models.EmailField(blank = True, null = True)

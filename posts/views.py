@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Post, Like
+from .models import Post, Like, Tips
 from profiles.models import Profile
 from .forms import PostModelForm, CommentModelForm
-from django.views.generic import UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views import View
@@ -50,7 +50,10 @@ def post_comment_create_list(request):
 
         return render(request, 'post.html', data)
     else:
-        return render(request, 'post.html')
+
+        tip = Tips.objects.all()
+
+        return render(request, 'post.html', {'tip': tip})
 
 def like_unlike_post(request):
 
@@ -106,3 +109,9 @@ class PostUpdateview(UpdateView):
             form.add_error(None, "You need yo be the author of this post in order to update this post!!!...")
             return super().form_invalid(form)
 
+
+def Detail_tips(request, id):
+    
+    data = {}
+    data["mania"] = Tips.objects.get(id = id)
+    return render(request, "detail_tips.html", data)

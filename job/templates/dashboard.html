@@ -26,35 +26,47 @@
 
     <!-- Job Table -->
     <div class="container">
-        
-        <table class="table table-bordered shadow">
-            <thead class="thead-dark">
-              <tr class ="text-center">
-                <th scope="col">S.No.</th>
-                <th scope="col">Company Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Application Status</th>
-                <th scope="col">Date applied</th>
-              </tr>
-            </thead>
-            <tbody>
-                {% for qs in dash %}
-                <tr class = "text-center">
-                <th scope="row">{{forloop.counter}}</th>
-                <td>{{qs.job}}</td>
-                <td>{{qs.email}}</td>
-                {% if qs.job_status == "Applied" %}
-                    <td><p class = "badge badge-warning" style = "font-size: 17px;">{{qs.job_status}}</p></td>
-                {% elif qs.job_status == "Seen"%}
-                    <td><p class = "badge badge-primary" style = "font-size: 17px;">{{qs.job_status}}</p></td>
-                {% elif qs.job_status == "Not-Selected"%}
-                    <td><p class = "badge badge-danger" style = "font-size: 17px;">{{qs.job_status}}</p></td>
-                {% endif %}        
-                <td>{{qs.date_applied}}</td>
+        {% if qs|length == 0 %}
+            <div class = "container text-center p-5">
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1 class = "alert alert-primary"> No Jobs applied till now!!!... </h1>
+                <a href = "{% url 'job_page' %}" class = "btn btn-primary btn-xl">
+                    <h1 class = "display-3"> Apply for a job now!!!... </h1>
+                </a>
+            </div>
+        {% else %}
+            <table class="table table-bordered shadow">
+                <thead class="thead-dark">
+                <tr class ="text-center">
+                    <th scope="col">S.No.</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Application Status</th>
+                    <th scope="col">Date applied</th>
                 </tr>
-                {% endfor %}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                    {% for qs in dash %}
+                    <tr class = "text-center">
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{qs.job}}</td>
+                    <td>{{qs.email}}</td>
+                    {% if qs.job_status == "Applied" %}
+                        <td><p class = "badge badge-warning" style = "font-size: 17px;">{{qs.job_status}}</p></td>
+                    {% elif qs.job_status == "Seen"%}
+                        <td><p class = "badge badge-primary" style = "font-size: 17px;">{{qs.job_status}}</p></td>
+                    {% elif qs.job_status == "Not-Selected"%}
+                        <td><p class = "badge badge-danger" style = "font-size: 17px;">{{qs.job_status}}</p></td>
+                    {% endif %}        
+                    <td>{{qs.date_applied}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
         <div class = "container text-center mt-5 mb-5">
             <a href = "{% url 'my_profile' %}">
