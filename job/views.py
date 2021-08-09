@@ -36,9 +36,11 @@ def JobDetailView(request, id):
             instance.save()
         return redirect('job_page')
 
+    stat = Dashboard.objects.get(user = request.user)
     data = {}
     data['job_form'] = job_form
     data["job"] = Job.objects.get(id = id) 
+    data["stat"] = stat
 
     return render(request, 'detail_job.html', data)            
 
