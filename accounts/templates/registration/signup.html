@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load socialaccount %}
+
 {% block title %} Registration {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -32,6 +34,13 @@
         <div class = "container mt-5 mb-5 text-center">
             <p> Already a  User ?? <a href = "{% url 'login' %}">Login here </p>
         </div>
+
+        <div class = "container text-center mb-3">
+            <a href = "{% provider_login_url 'google' %}">
+                <button class = "btn btn-md btn-outline-danger"> SignIn with <i class="fab fa-google ml-2"></i> </button>
+            </a>
+        </div>
+
     </div>
 
 </div>

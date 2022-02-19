@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Job Post {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class = "container m-5 border shadow p-5">
+
+        <h1 class = "display-3 mb-5"> Post a new Job </h1>
+
+        <div class = "container mt-2 mb-5">
+            <small> <b><u>Important</u></b>: Fields with (*) mark are necessary to fill </small>
+        </div>
+
+        <form method = "POST" enctype = "multipart/form-data" class = "mb-5">
+            {% csrf_token %}
+            {{form.media}}
+            {{form|crispy}}
+
+            <button type = "submit" class = "btn btn-lg btn-outline-success mt-3 mb-5" style = "float: right"> Post Job </button>
+
+        </form>
+    </div>
+
+{% endblock %}

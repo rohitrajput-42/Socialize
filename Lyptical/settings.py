@@ -34,7 +34,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'taggit',
-    'accounts'
+    'accounts',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +70,13 @@ TEMPLATES = [
         },
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 WSGI_APPLICATION = 'Lyptical.wsgi.application'
 
@@ -129,3 +142,17 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+SITE_ID = 3
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTHN_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}

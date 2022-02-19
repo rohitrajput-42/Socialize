@@ -376,7 +376,7 @@
                             <div class = "text-center col-lg-6">
                                 <form action = "{%  url 'like_unlike_post' %}" method = "POST" id = "like_form">
                                     {% csrf_token %}
-                                    <input type = "hidden" name = "post_id" value = {{delta.id}}>
+                                    <input type = "hidden" id = "postid" name = "post_id" value = {{delta.id}}>
                                     <button type = "submit" class = "btn text-primary">
                                         {% if customer not in delta.liked.all %}
                                         <i class="far fa-thumbs-up mr-2 ml-2"></i> <span style = "color :#000;">({{delta.num_likes}}) Like</span> </button>
@@ -595,12 +595,32 @@
         function myFunction() {
             var x = document.getElementById("show_me");
             if (x.style.display === "none") {
-                x.style.display = "block";
+                x.style.display = "block"; 
             } 
             else {
                 x.style.display = "none";
             }
         }
+    </script>
+
+    <script type = "text/javascript">
+
+        $(document).on('submit','#like_form', function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "like_unlike_post" %}',
+                data:{
+                    post_id: ('#postid').val(),
+                    csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val()
+                },
+                success:function(){
+                    alert('Done!');
+                }
+            });
+        });
+
     </script>
 
 

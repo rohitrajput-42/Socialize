@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from profiles.models import Profile
 from .models import Job, Dashboard
-from .forms import DashboardForm
+from .forms import DashboardForm, JobPostForm
 from profiles.models import Profile
 from .filters import JobFilter
 
@@ -36,7 +36,8 @@ def JobDetailView(request, id):
             instance.save()
         return redirect('job_page')
 
-    stat = Dashboard.objects.get(user = request.user)
+    stat = Dashboard.objects.filter(user = request.user)
+   
     data = {}
     data['job_form'] = job_form
     data["job"] = Job.objects.get(id = id) 
@@ -54,3 +55,25 @@ def Jobdashboard(request):
     }
 
     return render(request, "dashboard.html", data)
+
+def Post_job(request):
+
+    form = JobPostForm()
+
+    if request.method == 'POST':
+        form = JobPostForm(request.POST, request.FILES)
+        confirm = False
+        
+        if form.is_valid():
+            instance = form.save(commit = False)
+            instance.save()
+            form.save_m2m()
+            confirm = True 
+
+            return redirect('job_page')
+    
+    data = {
+        'form': form
+    }
+
+    return render(request, 'post_job.html', data)
