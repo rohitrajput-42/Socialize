@@ -125,7 +125,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = "image/download/"
 MEDIA_ROOT = BASE_DIR
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
