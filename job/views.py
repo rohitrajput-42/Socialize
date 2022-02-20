@@ -4,6 +4,8 @@ from .models import Job, Dashboard
 from .forms import DashboardForm
 from profiles.models import Profile
 from .filters import JobFilter
+import json
+from django.core import serializers
 
 def Jobpage(request):
     customer = Profile.objects.get(user=request.user)
@@ -26,6 +28,10 @@ def JobDetailView(request, id):
     job_form = DashboardForm()
     user = request.user
 
+    data = {}
+    data['job_form'] = job_form
+    data["job"] = Job.objects.get(id = id)
+
     if request.method == 'POST':
         job_form = DashboardForm(request.POST or None , request.FILES or None)
         if job_form.is_valid():
@@ -35,15 +41,7 @@ def JobDetailView(request, id):
             instance.job_status = 'Applied'
             instance.save()
         return redirect('job_page')
-
-    stat = Dashboard.objects.get(user = request.user)
-    data = {}
-    data['job_form'] = job_form
-    data["job"] = Job.objects.get(id = id) 
-    data["stat"] = stat
-
     return render(request, 'detail_job.html', data)            
-
 
 def Jobdashboard(request):
     
@@ -54,3 +52,12 @@ def Jobdashboard(request):
     }
 
     return render(request, "dashboard.html", data)
+
+
+def detail_dash(request, id):
+
+    dst = json.loads(serializers.serialize("json", Dashboard.objects.filter(id=id)))
+    print("aergaerh", dst)
+    data = {}
+    data["dst"] = dst
+    return render(request, "detail_dash.html", data)

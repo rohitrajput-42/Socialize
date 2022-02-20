@@ -26,7 +26,7 @@
 
     <!-- Job Table -->
     <div class="container">
-        {% if qs|length == 0 %}
+        {% if dash|length == 0 %}
             <div class = "container text-center p-5">
                 <br>
                 <br>
@@ -52,7 +52,7 @@
                     {% for qs in dash %}
                     <tr class = "text-center">
                     <th scope="row">{{forloop.counter}}</th>
-                    <td>{{qs.job}}</td>
+                    <td><a href = "{% url 'job_detail' qs.id %}" title = "View job offer">{{qs.job}}</a></td>
                     <td>{{qs.email}}</td>
                     {% if qs.job_status == "Applied" %}
                         <td><p class = "badge badge-warning" style = "font-size: 17px;">{{qs.job_status}}</p></td>
