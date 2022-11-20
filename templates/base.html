@@ -17,6 +17,7 @@
         min-height: 100vh;
         font-family: 'Poppins', sans-serif;
         font-weight: 300;
+        background-color: rgb(254, 254, 254);
       }
 
       h1, h2, h3, h4, h5, h6, p span {
@@ -63,13 +64,19 @@
         font-size: 12px;
       }
 
+      #nbar{
+        background: linear-gradient(180deg, rgb(0, 94, 255), rgb(108, 162, 255));
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+
     </style>
 
   </head>
   <body>
 
     <!--NAVBAR-->
-    <nav class="navbar navbar-default navbar-fixed-top navbar-expand-lg navbar-dark" style = "background-color: #00b2c8; height: 50px;">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-expand-lg shadow" id = "nbar">
 
       <a class="navbar-brand ml-1" href="/"><img style = "height: 40px;" src = "{% static 'logo.png' %}"></a>
 
@@ -107,14 +114,14 @@
             <a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <h3> Accounts <i class="far fa-caret-square-down"></i> </h3>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style = "background: rgb(125, 221, 228)">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               {% if user.is_authenticated %}
                 <p class="dropdown-item" ><i class="fas fa-user-astronaut mr-2"></i> Hello, <b>{{user.username}}</b></p>
                 <a class="dropdown-item" href="{% url 'logout' %}"> <i class="fas fa-sign-in-alt mr-2"></i> Logout</a>
                 <a class="dropdown-item" href="{% url 'contact' %}"> <i class="fas fa-headset mr-2"></i> Support</a>
               {% else %}
                 <a class="dropdown-item" href="{% url 'login' %}"> <i class="fas fa-sign-in-alt mr-2"></i> Login</a>
-                <a class="dropdown-item" href="{% url 'register' %}"> <i class="fas fa-sign-in-alt mr-2"></i> Get Started</a>
+                <a class="dropdown-item" href="{% url 'register' %}"> <i class="fas fa-sign-in-alt mr-2"></i> SignUp </a>
                 <a class="dropdown-item" href="{% url 'contact' %}"> <i class="fas fa-headset mr-2"></i> Support</a>
               {% endif %}
             </div>
